@@ -5,7 +5,9 @@ Summary:
 The website that is known as http://www.testfire.com was found to contain a critical vulnerability called as DOM based Cross Site Scripting, which is a type of Javascript vulnerability. According to Wikipedia, Cross site scripting or XSS attacks allow attackers to inject client-site scripts into web pages viewed by other users. They may be used to access bypass controls.DOM based XSS vulnerabilities usually occur when Javascript takes data from an attacker controllable source, such as URL and passes it to a sink that supports Dynamic code execution, such as eval() or innerHTML.When an attacker gets a user's browser to execute his/her code, the code will run within the security context (or zone) of the hosting web site. With this level of privilege, the code has the ability to read, modify and transmit any sensitive data accessible by the browser. A Cross-site Scripted user could have his/her account hijacked (cookie theft), their browser redirected to another location, or possibly shown fraudulent content delivered by the web site they are visiting. Cross-site Scripting attacks essentially compromise the trust relationship between a user and the web site. Applications utilizing browser object instances which load content from the file system may execute code under the local machine zone allowing for system compromise.
 
 
-Payload used: document.write ('... <script>alert(document.domain)</script> ...')
+Payload used:
+
+      document.write ('... <script>alert(document.domain)</script> ...')    
 ![Screenshot_2022-03-09_12_14_07](https://user-images.githubusercontent.com/101284893/157511062-46fe5b8a-7ddb-4e84-a317-4b1d180ce471.png)
 ![Screenshot_2022-03-09_13_44_20](https://user-images.githubusercontent.com/101284893/157511071-f46b5f45-a8ce-41ec-9ae6-5865e87cf843.png)
 
@@ -19,13 +21,13 @@ To reproduce this vulnerability:
 
 2)This Javascript code should be injected properly into the vulnerable parameter. The code should look like the following:
 
-GET http://www.testfire.net/admin HTTP/1.1
-Host: www.testfire.net
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0
-Pragma: no-cache
-Cache-Control: no-cache
-Referer: http://www.testfire.net/index.jsp?content=personal_other.htm
-Cookie: JSESSIONID=72AB73DB822E3625547D5115EB0F6C77
+    GET http://www.testfire.net/admin HTTP/1.1
+    Host: www.testfire.net
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0
+    Pragma: no-cache
+    Cache-Control: no-cache
+    Referer: http://www.testfire.net/index.jsp?content=personal_other.htm
+    Cookie: JSESSIONID=72AB73DB822E3625547D5115EB0F6C77
 ![Screenshot_2022-03-09_13_45_14](https://user-images.githubusercontent.com/101284893/157511075-98cab3c1-22cb-466d-992b-9d19214b3df2.png)
 
 3) As this injection happens in a GET parameter, the attacker now simply needs to send the crafted link that produces the GET request and have the victim click on it.
